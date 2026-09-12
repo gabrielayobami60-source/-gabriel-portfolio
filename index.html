@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gabriel Adewunmi — Product Portfolio</title>
+<meta name="description" content="Gabriel Adewunmi, Product Manager — portfolio of AI-native products, growth and SaaS work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --bg-soft:#F6F6F4;
+    --ink:#0B0B0C;
+    --ink-2:#47474B;
+    --mute:#89898E;
+    --line:rgba(11,11,12,.10);
+    --night:#0A0A0C;
+    --night-2:#17171A;
+    --line-dark:rgba(255,255,255,.14);
+    --ember:#FF5A1F;
+    --ember-2:#FFB37A;
+    --chip-bg:rgba(255,255,255,.06);
+    --chip-line:rgba(255,255,255,.16);
+    --chip-bg-light:rgba(11,11,12,.05);
+    --chip-line-light:rgba(11,11,12,.12);
+    --gutter:clamp(16px,4vw,56px);
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink-2);
+    font-family:'Inter',sans-serif;
+    font-size:16.5px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  .mono{
+    font-family:'IBM Plex Mono',monospace;
+    font-weight:500;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+  }
+  .frame{max-width:1320px;margin-inline:auto;padding-inline:var(--gutter);}
+
+  /* ---------- buttons & chips ---------- */
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:15px 24px;border-radius:999px;
+    font-family:'Inter',sans-serif;font-weight:600;font-size:14px;
+    white-space:nowrap;border:none;cursor:pointer;
+    transition:transform .2s ease,background .2s ease,color .2s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn .arrow{transition:transform .2s ease;}
+  .btn:hover .arrow{transform:translateX(3px);}
+  .btn-primary{background:var(--ember);color:#0B0B0C;}
+  .btn-primary:hover{background:var(--ember-2);}
+  .btn-dark{background:var(--ink);color:#fff;}
+  .btn-dark:hover{background:#000;}
+  .btn-outline{background:transparent;border:1px solid var(--line-dark);color:#fff;}
+  .btn-outline:hover{background:rgba(255,255,255,.08);}
+  .btn-outline.on-light{border-color:var(--line);color:var(--ink);}
+  .btn-outline.on-light:hover{background:rgba(11,11,12,.05);}
+
+  .chip{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:9px 16px;border-radius:999px;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;
+    text-transform:uppercase;
+    background:var(--chip-bg);border:1px solid var(--chip-line);color:rgba(255,255,255,.75);
+  }
+  .chip.light{background:var(--chip-bg-light);border-color:var(--chip-line-light);color:var(--ink-2);}
+  .chip .dot{color:var(--ember);}
+
+  /* cursor-spotlight glow on buttons */
+  .btn{position:relative;isolation:isolate;overflow:hidden;}
+  .btn::before{
+    content:"";position:absolute;inset:0;z-index:-1;opacity:0;
+    background:radial-gradient(140px circle at var(--x,50%) var(--y,50%), rgba(255,255,255,.4), transparent 65%);
+    mix-blend-mode:overlay;transition:opacity .3s ease;pointer-events:none;
+  }
+  .btn:hover::before{opacity:1;}
+
+  /* ---------- scroll progress bar ---------- */
+  .scroll-progress{
+    position:fixed;top:0;left:0;height:3px;width:0%;
+    background:var(--ember);z-index:200;pointer-events:none;
+  }
+
+  /* ---------- marquee ticker ---------- */
+  .marquee{
+    background:var(--night);overflow:hidden;padding-block:20px;
+    border-top:1px solid var(--line-dark);border-bottom:1px solid var(--line-dark);
+  }
+  .marquee-track{
+    display:flex;align-items:center;width:max-content;gap:36px;
+    animation:marquee-scroll 24s linear infinite;
+  }
+  .marquee-track span.item{
+    font-weight:800;font-size:clamp(18px,2.4vw,26px);letter-spacing:-.01em;
+    color:rgba(255,255,255,.85);white-space:nowrap;
+  }
+  .marquee-track span.sep{color:var(--ember);font-size:16px;}
+  @keyframes marquee-scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  @media (prefers-reduced-motion:reduce){
+    .marquee-track{animation:none;}
+  }
+
+  /* credentials chip row */
+  .cred-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;}
+
+  /* ---------- section heads ---------- */
+  section.light{background:var(--bg);color:var(--ink-2);}
+  section.night{background:var(--night);color:rgba(255,255,255,.82);}
+  .chapter{padding-block:88px;}
+  .section-head{margin-bottom:52px;max-width:760px;}
+  .section-head .chip{margin-bottom:22px;}
+  .big{
+    font-size:clamp(32px,4.4vw,56px);
+    font-weight:800;letter-spacing:-.02em;line-height:1.08;
+    margin:0;color:var(--ink);
+  }
+  section.night .big{color:#fff;}
+
+  /* ---------- scallop divider ---------- */
+  .scallop{height:22px;width:100%;background-repeat:repeat-x;background-position:top center;background-size:24px 24px;}
+  .scallop.to-light{background-color:var(--night);background-image:radial-gradient(circle at 12px 0, var(--bg) 12px, transparent 13px);}
+  .scallop.to-night{background-color:var(--bg);background-image:radial-gradient(circle at 12px 0, var(--night) 12px, transparent 13px);}
+
+  /* ---------- header ---------- */
+  header.site{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,.78);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  header.site .frame{
+    display:flex;align-items:center;justify-content:space-between;
+    padding-block:16px;gap:16px;
+  }
+  .brand{
+    display:flex;align-items:baseline;gap:6px;
+    font-weight:800;letter-spacing:-.01em;
+    font-size:16px;white-space:nowrap;color:var(--ink);
+  }
+  .brand .spark{color:var(--ember);}
+  .brand .role{
+    color:var(--mute);font-weight:500;
+    font-size:13px;letter-spacing:0;margin-left:4px;
+  }
+  nav.primary{display:flex;gap:26px;}
+  nav.primary a{
+    font-family:'Inter',sans-serif;font-size:13px;font-weight:700;
+    text-transform:uppercase;letter-spacing:.03em;color:var(--ink-2);
+    transition:color .2s ease;
+  }
+  nav.primary a:hover{color:var(--ember);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;background:var(--night);color:#fff;overflow:hidden;
+  }
+  .hero .glow{
+    position:absolute;top:-20%;right:-10%;width:60vw;height:60vw;max-width:820px;max-height:820px;
+    background:radial-gradient(circle,rgba(255,90,31,.28) 0%,rgba(255,90,31,0) 70%);
+    pointer-events:none;
+  }
+  .hero .frame{position:relative;z-index:2;padding-block:44px 72px;}
+  .hero-chips{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:36px;}
+  .hero h1{
+    font-size:clamp(40px,7.4vw,92px);font-weight:800;letter-spacing:-.025em;
+    line-height:1.04;margin:0 0 40px;max-width:16ch;
+  }
+  .hero-row{
+    display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;
+  }
+  .hero-buttons{display:flex;gap:14px;flex-wrap:wrap;}
+  .hero-portrait{
+    width:min(220px,32vw);aspect-ratio:3/4;flex-shrink:0;border-radius:20px;
+  }
+
+  /* ---------- placeholders ---------- */
+  .ph{
+    position:relative;overflow:hidden;border-radius:20px;isolation:isolate;
+    background-size:cover;
+  }
+  .ph::after{
+    content:"";position:absolute;inset:0;opacity:.16;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:180px 180px;pointer-events:none;
+  }
+  .ph .tag{
+    position:absolute;left:10px;bottom:10px;z-index:2;
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;
+    text-transform:uppercase;color:#fff;
+    background:rgba(10,10,10,.55);padding:5px 9px;border-radius:6px;
+    backdrop-filter:blur(2px);
+  }
+  .art-ember{background:linear-gradient(135deg,#2b1206,#7a2e0d 45%,var(--ember) 110%);}
+  .art-steel{background:linear-gradient(135deg,#1c1f22,#3a4046 50%,#9aa4ae 120%);}
+  .art-sky{background:linear-gradient(135deg,#0d1b2a,#2f5f8f 55%,#a7c7e7 120%);}
+  .art-dusk{background:linear-gradient(135deg,#231627,#5c3a6b 55%,#c98bd6 120%);}
+  .art-moss{background:linear-gradient(135deg,#12200f,#3f5c2e 55%,#8fae5a 120%);}
+  .art-glow{background:linear-gradient(135deg,#0A0A0A,#3a1a08 55%,var(--ember) 130%);}
+  .art-paper{background:linear-gradient(135deg,#c9c8c1,#dedcd4 55%,#f7f6f2 120%);}
+
+  /* ---------- 01 introduction ---------- */
+  .intro-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:start;}
+  .lede{
+    font-size:clamp(22px,2.6vw,34px);font-weight:600;
+    letter-spacing:-.01em;line-height:1.3;margin:0 0 8px;max-width:20ch;color:var(--ink);
+  }
+  .lede em{color:var(--ember);font-style:normal;}
+  .intro-body p{max-width:52ch;margin:0 0 18px;color:var(--ink-2);}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--mute);margin:0 0 18px;display:block;
+  }
+  .meta-strip{
+    margin-top:36px;padding-top:28px;border-top:1px solid var(--line);
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  }
+  .meta-strip .item .k{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--mute);display:block;margin-bottom:8px;
+  }
+  .meta-strip .item .v{font-size:14.5px;font-weight:600;color:var(--ink);}
+
+  /* ---------- 02 featured ---------- */
+  .featured-image{width:100%;aspect-ratio:16/8;margin-bottom:32px;}
+  .featured-body{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
+  .featured-caption{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--mute);margin:0 0 14px;
+  }
+  .featured-caption b{color:var(--ink);font-weight:700;}
+  .featured-copy p{max-width:56ch;color:var(--ink-2);margin:0;}
+  .stat-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;}
+  .stat-row .stat{
+    padding:14px 18px;border-radius:16px;background:var(--bg-soft);
+  }
+  .stat-row .stat b{
+    display:block;font-size:22px;color:var(--ink);font-weight:800;
+  }
+  .stat-row .stat span{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--mute);
+  }
+
+  /* ---------- 03 portfolio ---------- */
+  .portfolio-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:28px;perspective:1200px;}
+  .portfolio-grid .card:nth-child(1){grid-column:1/6;}
+  .portfolio-grid .card:nth-child(2){grid-column:7/13;margin-top:70px;}
+  .portfolio-grid .card:nth-child(3){grid-column:3/9;margin-top:36px;}
+  .card{transition:transform .25s ease;transform-style:preserve-3d;will-change:transform;}
+  .card .ph{aspect-ratio:4/5;margin-bottom:16px;}
+  .card:hover .ph{transform:scale(1.02);transition:transform .5s ease;}
+  .card-cap{font-weight:700;font-size:16px;margin:0 0 2px;color:var(--ink);}
+  .card-cap .role{font-weight:400;color:var(--mute);}
+  .see-all{margin-top:56px;}
+
+  /* ---------- 04 about / facts (dark stat grid) ---------- */
+  .facts-grid{
+    display:grid;grid-template-columns:1fr 1fr;
+    border-top:1px solid var(--line-dark);border-left:1px solid var(--line-dark);
+    border-radius:24px;overflow:hidden;
+  }
+  .fact-cell{
+    padding:48px 24px;text-align:center;
+    border-right:1px solid var(--line-dark);border-bottom:1px solid var(--line-dark);
+  }
+  .fact-cell .numeral{
+    font-size:clamp(48px,6.4vw,84px);font-weight:800;
+    letter-spacing:-.02em;line-height:1;color:#fff;
+  }
+  .fact-cell .label{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;
+    text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:14px;
+  }
+  .about-images{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;margin-top:56px;}
+  .about-images .ph{aspect-ratio:4/3;}
+
+  /* ---------- info rows (principles & services) ---------- */
+  .info-list{border-top:1px solid var(--line);}
+  .info-row{
+    display:grid;grid-template-columns:64px minmax(200px,260px) 1fr;gap:24px;
+    padding:36px 0;border-bottom:1px solid var(--line);align-items:start;
+  }
+  .info-row .idx{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ember);letter-spacing:.06em;
+    padding-top:4px;
+  }
+  .info-row .title-col h3{font-size:20px;font-weight:800;margin:0;letter-spacing:-.01em;color:var(--ink);}
+  .info-row .glyphs{font-size:22px;letter-spacing:.25em;color:var(--ember);margin-bottom:10px;}
+  .info-row p{margin:0;max-width:56ch;color:var(--ink-2);}
+  .info-row.has-image{grid-template-columns:64px minmax(200px,260px) 1fr 140px;}
+  .info-row .row-thumb{aspect-ratio:3/4;align-self:start;}
+  .info-row.is-dark{background:var(--night);border-radius:20px;border-bottom:none;padding:32px 28px;color:#fff;}
+  .info-row.is-dark{grid-template-columns:64px minmax(200px,260px) 1fr;}
+  .info-row.is-dark .title-col h3{color:#fff;}
+  .info-row.is-dark p{color:rgba(255,255,255,.78);}
+  .info-row.is-dark .idx{color:var(--ember-2);}
+  .info-row.is-quote p{
+    font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.02em;
+    line-height:1.9;position:relative;padding-left:22px;margin-bottom:12px;
+  }
+  .info-row.is-quote p:last-child{margin-bottom:0;}
+  .info-row.is-quote p::before{content:"○";position:absolute;left:0;color:var(--ember);}
+  .info-row.is-quote .title-col{visibility:hidden;}
+
+  /* ---------- 07 contact ---------- */
+  .contact-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:start;}
+  .contact .eyebrow{color:rgba(255,255,255,.5);}
+  .contact-email{
+    font-size:clamp(24px,3.4vw,40px);font-weight:700;
+    color:var(--ember);text-decoration:underline;text-underline-offset:8px;
+    display:inline-block;word-break:break-word;
+  }
+  .contact-buttons{display:flex;flex-direction:column;gap:14px;align-items:flex-start;}
+  footer.site{
+    margin-top:80px;padding-top:24px;border-top:1px solid var(--line-dark);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.05em;
+    color:rgba(255,255,255,.5);
+  }
+
+  /* ---------- scroll reveal (progressive enhancement) ---------- */
+  .rv{opacity:1;transform:none;}
+  body.rv-armed .rv{
+    opacity:0;transform:translateY(18px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  body.rv-armed .rv.rv-in{opacity:1;transform:none;}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:980px){
+    nav.primary{display:none;}
+    .intro-grid,.featured-body,.contact-grid{grid-template-columns:1fr;gap:32px;}
+    .meta-strip{grid-template-columns:1fr 1fr;}
+    .portfolio-grid .card:nth-child(1){grid-column:1/13;}
+    .portfolio-grid .card:nth-child(2){grid-column:1/13;margin-top:0;}
+    .portfolio-grid .card:nth-child(3){grid-column:1/13;margin-top:0;}
+    .facts-grid{grid-template-columns:1fr;}
+    .about-images{grid-template-columns:1fr;}
+    .info-row{grid-template-columns:44px 1fr;row-gap:12px;}
+    .info-row.has-image{grid-template-columns:44px 1fr;}
+    .info-row .title-col{grid-column:2/3;}
+    .info-row p{grid-column:1/3;max-width:none;}
+    .info-row .row-thumb{display:none;}
+  }
+  @media (max-width:640px){
+    body{font-size:15.5px;}
+    .brand .role{display:none;}
+    .chapter{padding-block:64px;}
+    .hero-row{flex-direction:column;align-items:flex-start;}
+    .hero-portrait{width:56vw;}
+    .meta-strip{grid-template-columns:1fr;}
+    footer.site{flex-direction:column;}
+  }
+  @media (max-width:420px){
+    .hero-portrait{width:50vw;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<header class="site">
+  <div class="frame">
+    <div class="brand"><span class="spark">✳</span>Gabriel Adewunmi<span class="role">/ Product Manager</span></div>
+    <nav class="primary">
+      <a href="#intro">Intro</a>
+      <a href="#featured">Featured</a>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#principles">Principles</a>
+      <a href="#services">Services</a>
+    </nav>
+    <a class="btn btn-dark" href="#contact">Get in touch <span class="arrow">→</span></a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="frame">
+    <div class="hero-chips">
+      <span class="chip">Product Manager / AI-native products / Growth &amp; SaaS</span>
+      <span class="chip"><span class="dot">●</span> Essex, UK / <span id="clock">--:--</span></span>
+      <span class="chip"><span class="dot">●</span> /03 selected projects</span>
+    </div>
+
+    <h1>Product Portfolio</h1>
+
+    <div class="hero-row">
+      <div class="hero-buttons">
+        <a class="btn btn-primary" href="#contact">Get in touch <span class="arrow">→</span></a>
+        <a class="btn btn-outline" href="#work">View my work <span class="arrow">→</span></a>
+      </div>
+      <div class="hero-portrait ph art-glow">
+        <div class="tag">Replace: portrait / hero image</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="item">Product Manager</span><span class="sep">✳</span>
+    <span class="item">Kirro</span><span class="sep">✳</span>
+    <span class="item">Wandr</span><span class="sep">✳</span>
+    <span class="item">Stitchomes</span><span class="sep">✳</span>
+    <span class="item">Product Manager</span><span class="sep">✳</span>
+    <span class="item">Kirro</span><span class="sep">✳</span>
+    <span class="item">Wandr</span><span class="sep">✳</span>
+    <span class="item">Stitchomes</span><span class="sep">✳</span>
+  </div>
+</div>
+
+<div class="scallop to-light" aria-hidden="true"></div>
+
+<section class="chapter light" id="intro">
+  <div class="frame">
+    <div class="intro-grid">
+      <div class="rv">
+        <span class="eyebrow">Hello, I'm Gabriel</span>
+        <p class="lede">I build products where the <em>AI agent is the product</em> — not a feature bolted on at the end.</p>
+      </div>
+
+      <div class="intro-body rv">
+        <p>I'm a Product Manager based in Essex, UK, with 3+ years across AI products, SaaS and growth. Since January 2023 I've been at Kirro, an AI-powered job search platform, where I own the roadmap and use Mixpanel analytics to decide what we build next.</p>
+        <p>Outside Kirro I'm the founder of Wandr, an AI travel decision engine, and co-founder and product lead at Stitchomes, a home-maintenance marketplace for UK homeowners. My path into product ran through marketing and customer insight, which is why I still start every problem with the customer's evidence rather than the org chart.</p>
+        <p>I leverage AI tools like Claude and Codex to optimise my workflow — and I use Claude Code to ship fixes and improvements to the product myself, without waiting on a sprint slot.</p>
+        <p>Economics graduate. Certified AI Product Manager (KairosLabs), Google Business Intelligence, and Scrum Product Owner.</p>
+
+        <div class="cred-row rv">
+          <span class="chip light">Certified AI Product Manager (KairosLabs)</span>
+          <span class="chip light">Google Business Intelligence</span>
+          <span class="chip light">Scrum Product Owner</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="meta-strip rv">
+      <div class="item">
+        <span class="k">Based in</span>
+        <span class="v">Essex, UK · London &amp; Manchester</span>
+      </div>
+      <div class="item">
+        <span class="k">Currently</span>
+        <span class="v">Product Manager, Kirro</span>
+      </div>
+      <div class="item">
+        <span class="k">Daily tools</span>
+        <span class="v">Claude Code · Codex · Wispr Flow · Mixpanel</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter light" id="featured">
+  <div class="frame">
+    <div class="section-head rv">
+      <span class="chip light">02 — Featured</span>
+      <h2 class="big">Best works</h2>
+    </div>
+
+    <div class="featured-image ph art-steel rv">
+      <div class="tag">Replace: Kirro onboarding screens</div>
+    </div>
+
+    <div class="featured-body">
+      <div class="rv">
+        <p class="featured-caption">Kirro · AI job search — <b>Onboarding redesign</b></p>
+      </div>
+      <div class="featured-copy rv">
+        <p>Kirro's first-run experience was asking new users for everything before it showed them anything. I reframed onboarding around a single job-match moment, cut the intake down to what the matching model actually needed, and let the AI do the first piece of work in front of the user. Adoption of the core feature rose by roughly a quarter.</p>
+        <div class="stat-row">
+          <div class="stat"><b>+25%</b><span>Feature adoption</span></div>
+          <div class="stat"><b>2023—</b><span>Roadmap owner</span></div>
+          <div class="stat"><b>Mixpanel</b><span>Decision layer</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter light" id="work">
+  <div class="frame">
+    <div class="section-head rv">
+      <span class="chip light">03 — Portfolio</span>
+      <h2 class="big">Latest work</h2>
+    </div>
+
+    <div class="portfolio-grid">
+      <div class="card rv">
+        <div class="ph art-sky">
+          <div class="tag">Replace: Wandr app screens</div>
+        </div>
+        <p class="card-cap">Wandr — AI travel decision engine <span class="role">· Founder</span></p>
+      </div>
+      <div class="card rv">
+        <div class="ph art-ember">
+          <div class="tag">Replace: Kirro product</div>
+        </div>
+        <p class="card-cap">Kirro — AI-powered job search <span class="role">· Product Manager</span></p>
+      </div>
+      <div class="card rv">
+        <div class="ph art-moss">
+          <div class="tag">Replace: Stitchomes marketplace</div>
+        </div>
+        <p class="card-cap">Stitchomes — Home-maintenance marketplace <span class="role">· Co-founder, product lead</span></p>
+      </div>
+    </div>
+
+    <a class="btn btn-dark see-all rv" href="#contact">See all my work <span class="arrow">→</span></a>
+  </div>
+</section>
+
+<section class="chapter night" id="about">
+  <div class="frame">
+    <div class="section-head rv">
+      <span class="chip">04 — About</span>
+      <h2 class="big">Facts &amp; figures</h2>
+    </div>
+
+    <div class="facts-grid rv">
+      <div class="fact-cell">
+        <div class="numeral">3</div>
+        <div class="label">Years in product</div>
+      </div>
+      <div class="fact-cell">
+        <div class="numeral">3</div>
+        <div class="label">Products led or founded</div>
+      </div>
+      <div class="fact-cell">
+        <div class="numeral">25%</div>
+        <div class="label">Feature adoption uplift</div>
+      </div>
+      <div class="fact-cell">
+        <div class="numeral">40%</div>
+        <div class="label">Customer retention lift</div>
+      </div>
+    </div>
+
+    <div class="about-images">
+      <div class="ph art-dusk rv">
+        <div class="tag">Replace: workspace / process photo</div>
+      </div>
+      <div class="ph art-paper rv">
+        <div class="tag">Replace: product detail</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="scallop to-light" aria-hidden="true"></div>
+
+<section class="chapter light" id="principles">
+  <div class="frame">
+    <div class="section-head rv">
+      <span class="chip light">05 — Work principles</span>
+      <h2 class="big">How I work</h2>
+    </div>
+
+    <div class="info-list">
+      <div class="info-row has-image rv">
+        <span class="idx mono">01</span>
+        <div class="title-col"><h3>Agents first</h3></div>
+        <p>If the AI can't do a meaningful piece of the user's job on its own, it isn't the product yet. I design around the agent's first useful act, not around a form.</p>
+        <div class="row-thumb ph art-glow">
+          <div class="tag">Replace: workflow / agent-first snapshot</div>
+        </div>
+      </div>
+
+      <div class="info-row rv">
+        <span class="idx mono">02</span>
+        <div class="title-col">
+          <div class="glyphs">◐ ▲ ⌘</div>
+          <h3>AI in the loop, every day</h3>
+        </div>
+        <p>I leverage AI tools like Claude and Codex to optimise my workflow — research, PRDs, analysis, prototypes — and Wispr Flow to think out loud faster than I can type.</p>
+      </div>
+
+      <div class="info-row is-dark rv">
+        <span class="idx mono">03</span>
+        <div class="title-col"><h3>I ship, not just spec</h3></div>
+        <p>I use Claude Code to ship fixes and improvements to the product that improve my day-to-day — work that increased customer retention by 40%.</p>
+      </div>
+
+      <div class="info-row is-quote rv">
+        <span class="idx mono">04</span>
+        <div class="title-col"><h3>Evidence &amp; honesty</h3></div>
+        <p>Evidence over opinion: every roadmap call is argued from Mixpanel funnels and user conversations.</p>
+        <p>Honest about technology: I say plainly what a model can and can't do today.</p>
+      </div>
+
+      <div class="info-row rv">
+        <span class="idx mono">05</span>
+        <div class="title-col"><h3>Value-driven design</h3></div>
+        <p>Screens serve the outcome. In marketplaces like Stitchomes the win is a booked tradesperson, not a beautiful listing page.</p>
+      </div>
+
+      <div class="info-row rv">
+        <span class="idx mono">06</span>
+        <div class="title-col"><h3>Ship, measure, iterate</h3></div>
+        <p>Small releases, fast feedback. Wandr's PRD has been through four versions because the customer keeps teaching us something.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter light" id="services">
+  <div class="frame">
+    <div class="section-head rv">
+      <span class="chip light">06 — Services</span>
+      <h2 class="big">What I do</h2>
+    </div>
+
+    <div class="info-list rv">
+      <div class="info-row">
+        <span class="idx mono">/01</span>
+        <div class="title-col"><h3>AI product strategy</h3></div>
+        <p>Positioning, PRDs and technical architecture for products where a model or agent is the core value — from zero-to-one to v4.</p>
+      </div>
+      <div class="info-row">
+        <span class="idx mono">/02</span>
+        <div class="title-col"><h3>Growth &amp; onboarding</h3></div>
+        <p>Activation funnels, first-run experiences and the analytics to prove they moved the number.</p>
+      </div>
+      <div class="info-row">
+        <span class="idx mono">/03</span>
+        <div class="title-col"><h3>Roadmap ownership</h3></div>
+        <p>Prioritisation, stakeholder alignment and delivery with cross-functional teams in Scrum.</p>
+      </div>
+      <div class="info-row">
+        <span class="idx mono">/04</span>
+        <div class="title-col"><h3>Marketplace &amp; SaaS product</h3></div>
+        <p>Two-sided marketplace mechanics, supply and demand loops, and subscription-plus-affiliate business models.</p>
+      </div>
+      <div class="info-row">
+        <span class="idx mono">/05</span>
+        <div class="title-col"><h3>AI-assisted delivery</h3></div>
+        <p>Hands-on with Claude Code and Codex: shipping product fixes and improvements directly, and helping teams fold AI tooling into their day-to-day workflow.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="scallop to-night" aria-hidden="true"></div>
+
+<section class="chapter night contact" id="contact">
+  <div class="frame">
+    <div class="section-head rv">
+      <span class="eyebrow">Open to AI PM, Founding PM and Product roles</span>
+      <h2 class="big">Let's build something</h2>
+    </div>
+
+    <div class="contact-grid">
+      <div class="rv">
+        <a class="contact-email" href="mailto:gabrielayobami60@gmail.com">gabrielayobami60@gmail.com</a>
+      </div>
+      <div class="contact-buttons rv">
+        <a class="btn btn-outline" href="#">LinkedIn <span class="arrow">→</span></a>
+        <a class="btn btn-outline" href="#">Download CV <span class="arrow">→</span></a>
+        <a class="btn btn-primary" href="https://kirro.ai" target="_blank" rel="noopener">Kirro.ai <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+    <footer class="site">
+      <span>© 2026 Gabriel Adewunmi</span>
+      <span>Essex · London · Manchester</span>
+      <span>Design inspired by Phenomenon Studio</span>
+    </footer>
+  </div>
+</section>
+
+<script>
+(function(){
+  "use strict";
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* live clock — Europe/London */
+  var clockEl = document.getElementById('clock');
+  function updateClock(){
+    try{
+      var fmt = new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Europe/London'});
+      clockEl.textContent = fmt.format(new Date());
+    }catch(e){
+      clockEl.textContent = new Date().toTimeString().slice(0,5);
+    }
+  }
+  updateClock();
+  setInterval(updateClock, 15000);
+
+  /* scroll progress bar */
+  var progressEl = document.getElementById('scrollProgress');
+  function updateProgress(){
+    var h = document.documentElement;
+    var scrolled = h.scrollTop;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (scrolled / max) * 100 : 0;
+    progressEl.style.width = pct + '%';
+  }
+  updateProgress();
+  window.addEventListener('scroll', updateProgress, {passive:true});
+  window.addEventListener('resize', updateProgress);
+
+  /* cursor-spotlight glow on buttons */
+  document.querySelectorAll('.btn').forEach(function(btn){
+    btn.addEventListener('mousemove', function(e){
+      var r = btn.getBoundingClientRect();
+      btn.style.setProperty('--x', ((e.clientX - r.left) / r.width * 100) + '%');
+      btn.style.setProperty('--y', ((e.clientY - r.top) / r.height * 100) + '%');
+    });
+  });
+
+  /* subtle 3D tilt on portfolio cards */
+  if(!reduceMotion){
+    document.querySelectorAll('.portfolio-grid .card').forEach(function(card){
+      card.addEventListener('mousemove', function(e){
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = 'rotateX(' + (py * -8) + 'deg) rotateY(' + (px * 8) + 'deg)';
+      });
+      card.addEventListener('mouseleave', function(){
+        card.style.transform = 'rotateX(0) rotateY(0)';
+      });
+    });
+  }
+
+  /* animated count-up for the facts & figures stat grid */
+  if(!reduceMotion && 'IntersectionObserver' in window){
+    var numerals = document.querySelectorAll('.fact-cell .numeral');
+    var countIo = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(!entry.isIntersecting) return;
+        countIo.unobserve(entry.target);
+        var el = entry.target;
+        var match = el.textContent.match(/^(\d+)(.*)$/);
+        if(!match) return;
+        var target = parseInt(match[1], 10);
+        var suffix = match[2];
+        var start = null;
+        var duration = 1100;
+        function step(ts){
+          if(!start) start = ts;
+          var progress = Math.min((ts - start) / duration, 1);
+          var eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(eased * target) + suffix;
+          if(progress < 1){ requestAnimationFrame(step); }
+        }
+        requestAnimationFrame(step);
+      });
+    }, {threshold:0.4});
+    numerals.forEach(function(el){ countIo.observe(el); });
+  }
+
+  /* scroll reveal — progressive enhancement only.
+     Without JS, or with reduced motion, .rv stays fully visible (see CSS defaults). */
+  if(!reduceMotion && 'IntersectionObserver' in window){
+    document.body.classList.add('rv-armed');
+    var items = document.querySelectorAll('.rv');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('rv-in');
+          io.unobserve(entry.target);
+        }
+      });
+    },{threshold:0.12, rootMargin:'0px 0px -5% 0px'});
+
+    items.forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if(r.top < window.innerHeight && r.bottom > 0){
+        el.classList.add('rv-in');
+      } else {
+        io.observe(el);
+      }
+    });
+  }
+})();
+</script>
+</body>
+</html>
