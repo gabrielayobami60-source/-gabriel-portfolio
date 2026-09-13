@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gabriel Adewunmi — Product Portfolio</title>
 <meta name="description" content="Gabriel Adewunmi, Product Manager — portfolio of AI-native products, growth and SaaS work.">
+<script>
+(function(){
+  try{
+    if(localStorage.getItem('theme') === 'dark'){
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  }catch(e){}
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -25,7 +34,24 @@
     --chip-line:rgba(255,255,255,.16);
     --chip-bg-light:rgba(11,11,12,.05);
     --chip-line-light:rgba(11,11,12,.12);
+    --header-bg:rgba(255,255,255,.78);
     --gutter:clamp(16px,4vw,56px);
+  }
+
+  html[data-theme="dark"]{
+    --bg:#0A0A0C;
+    --bg-soft:#18181B;
+    --ink:#F5F5F4;
+    --ink-2:#C7C7CA;
+    --line:rgba(255,255,255,.12);
+    --chip-bg-light:rgba(255,255,255,.06);
+    --chip-line-light:rgba(255,255,255,.16);
+    --header-bg:rgba(10,10,12,.78);
+  }
+  html{transition:background-color .3s ease;}
+  body{transition:background-color .3s ease,color .3s ease;}
+  @media (prefers-reduced-motion:reduce){
+    html,body{transition:none;}
   }
 
   *,*::before,*::after{box-sizing:border-box;}
@@ -62,8 +88,8 @@
   .btn:hover .arrow{transform:translateX(3px);}
   .btn-primary{background:var(--ember);color:#0B0B0C;}
   .btn-primary:hover{background:var(--ember-2);}
-  .btn-dark{background:var(--ink);color:#fff;}
-  .btn-dark:hover{background:#000;}
+  .btn-dark{background:var(--ink);color:var(--bg);}
+  .btn-dark:hover{opacity:.85;}
   .btn-outline{background:transparent;border:1px solid var(--line-dark);color:#fff;}
   .btn-outline:hover{background:rgba(255,255,255,.08);}
   .btn-outline.on-light{border-color:var(--line);color:var(--ink);}
@@ -137,10 +163,11 @@
   /* ---------- header ---------- */
   header.site{
     position:sticky;top:0;z-index:50;
-    background:rgba(255,255,255,.78);
+    background:var(--header-bg);
     backdrop-filter:blur(14px);
     -webkit-backdrop-filter:blur(14px);
     border-bottom:1px solid var(--line);
+    transition:background-color .3s ease;
   }
   header.site .frame{
     display:flex;align-items:center;justify-content:space-between;
@@ -163,6 +190,23 @@
     transition:color .2s ease;
   }
   nav.primary a:hover{color:var(--ember);}
+
+  /* theme toggle */
+  .theme-toggle{
+    display:inline-flex;align-items:center;gap:6px;
+    width:52px;height:30px;padding:3px;border-radius:999px;
+    background:var(--chip-bg-light);border:1px solid var(--chip-line-light);
+    cursor:pointer;flex-shrink:0;position:relative;
+  }
+  .theme-toggle .knob{
+    width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:11px;
+    transform:translateX(0);transition:transform .25s ease,background .25s ease;
+  }
+  html[data-theme="dark"] .theme-toggle .knob{transform:translateX(22px);background:var(--ember);}
+  @media (prefers-reduced-motion:reduce){
+    .theme-toggle .knob{transition:none;}
+  }
 
   /* ---------- hero ---------- */
   .hero{
@@ -408,9 +452,17 @@
     .hero-portrait{width:56vw;}
     .meta-strip{grid-template-columns:1fr;}
     footer.site{flex-direction:column;}
+    header .frame > div:last-child{gap:8px;}
+    .theme-toggle{width:40px;height:24px;}
+    .theme-toggle .knob{width:18px;height:18px;font-size:9px;}
+    html[data-theme="dark"] .theme-toggle .knob{transform:translateX(16px);}
+    header .btn-dark{padding:10px 14px;font-size:12.5px;gap:6px;}
   }
   @media (max-width:420px){
     .hero-portrait{width:50vw;}
+  }
+  @media (max-width:380px){
+    header .btn-dark .arrow{display:none;}
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -433,7 +485,12 @@
       <a href="#principles">Principles</a>
       <a href="#services">Services</a>
     </nav>
-    <a class="btn btn-dark" href="#contact">Get in touch <span class="arrow">→</span></a>
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode" aria-pressed="false">
+        <span class="knob" aria-hidden="true">☀</span>
+      </button>
+      <a class="btn btn-dark" href="#contact">Get in touch <span class="arrow">→</span></a>
+    </div>
   </div>
 </header>
 
@@ -824,6 +881,27 @@
   }
   updateClock();
   setInterval(updateClock, 15000);
+
+  /* dark mode toggle */
+  var themeToggle = document.getElementById('themeToggle');
+  var themeKnob = themeToggle.querySelector('.knob');
+  function applyThemeIcon(){
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    themeKnob.textContent = isDark ? '☾' : '☀';
+    themeToggle.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+  }
+  applyThemeIcon();
+  themeToggle.addEventListener('click', function(){
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if(isDark){
+      document.documentElement.removeAttribute('data-theme');
+      try{ localStorage.setItem('theme', 'light'); }catch(e){}
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      try{ localStorage.setItem('theme', 'dark'); }catch(e){}
+    }
+    applyThemeIcon();
+  });
 
   /* scroll progress bar */
   var progressEl = document.getElementById('scrollProgress');
