@@ -55,43 +55,62 @@
     window.addEventListener('resize', updateProgress);
   }
 
-  /* principles: click a number — or focus one and use ↑/↓ — to move the dark highlight */
-  var principleRows = document.querySelectorAll('#principles .info-row');
-  if(principleRows.length){
-    var principleIdxs = [];
-    principleRows.forEach(function(row){
-      var idx = row.querySelector('.idx');
+  /* info-row lists (principles, services): tap any row to highlight it, or use the
+     ↑/↓ buttons — those work with touch, unlike arrow keys, which only reach desktop
+     keyboard users and are kept here as a bonus, not the primary way to move it. */
+  function wireHighlightList(sectionId){
+    var section = document.getElementById(sectionId);
+    if(!section) return;
+    var rows = Array.prototype.slice.call(section.querySelectorAll('.info-row'));
+    if(!rows.length) return;
+    var idxs = rows.map(function(row){ return row.querySelector('.idx'); });
+
+    function currentIndex(){
+      for(var n = 0; n < rows.length; n++){ if(rows[n].classList.contains('is-dark')) return n; }
+      return -1;
+    }
+    function activate(i){
+      if(i < 0) i = rows.length - 1;
+      if(i >= rows.length) i = 0;
+      rows.forEach(function(r){ r.classList.remove('is-dark'); });
+      idxs.forEach(function(x){ if(x) x.setAttribute('aria-pressed', 'false'); });
+      rows[i].classList.add('is-dark');
+      if(idxs[i]) idxs[i].setAttribute('aria-pressed', 'true');
+      return i;
+    }
+
+    rows.forEach(function(row, i){
+      row.addEventListener('click', function(){ activate(i); });
+      var idx = idxs[i];
       if(!idx) return;
       idx.setAttribute('tabindex', '0');
       idx.setAttribute('role', 'button');
       idx.setAttribute('aria-pressed', row.classList.contains('is-dark') ? 'true' : 'false');
-      principleIdxs.push(idx);
-
-      function activate(){
-        principleRows.forEach(function(r){ r.classList.remove('is-dark'); });
-        principleIdxs.forEach(function(i){ i.setAttribute('aria-pressed', 'false'); });
-        row.classList.add('is-dark');
-        idx.setAttribute('aria-pressed', 'true');
-      }
-      idx.addEventListener('click', activate);
       idx.addEventListener('keydown', function(e){
         if(e.key === 'Enter' || e.key === ' '){
           e.preventDefault();
-          activate();
+          activate(i);
           return;
         }
         if(e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
         e.preventDefault();
-        var i = principleIdxs.indexOf(idx);
-        var next = e.key === 'ArrowDown' ? i + 1 : i - 1;
-        if(next < 0) next = principleIdxs.length - 1;
-        if(next >= principleIdxs.length) next = 0;
-        var nextIdx = principleIdxs[next];
-        nextIdx.focus();
-        nextIdx.click();
+        var next = activate(e.key === 'ArrowDown' ? i + 1 : i - 1);
+        if(idxs[next]) idxs[next].focus();
       });
     });
+
+    var nav = section.querySelector('.list-nav');
+    if(nav){
+      nav.querySelectorAll('.list-nav-btn').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var dir = btn.getAttribute('data-dir') === 'down' ? 1 : -1;
+          activate(currentIndex() + dir);
+        });
+      });
+    }
   }
+  wireHighlightList('principles');
+  wireHighlightList('services');
 
   /* cursor-spotlight glow on buttons */
   document.querySelectorAll('.btn').forEach(function(btn){

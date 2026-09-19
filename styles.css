@@ -389,18 +389,27 @@ html[data-theme="dark"] .theme-toggle .knob{transform:translateX(22px);backgroun
 .about-images .ph{aspect-ratio:4/3;}
 
 /* ---------- info rows (principles & services) ---------- */
+.list-nav{display:flex;gap:10px;margin-bottom:20px;}
+.list-nav-btn{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;
+  color:var(--ink-2);background:var(--chip-bg-light);border:1px solid var(--line);
+  padding:9px 16px;border-radius:999px;cursor:pointer;transition:background .2s ease,color .2s ease;
+}
+.list-nav-btn:hover{background:var(--ink);color:#fff;border-color:var(--ink);}
+.list-nav-btn:active{transform:scale(.97);}
 .info-list{border-top:1px solid var(--line);}
 .info-row{
   display:grid;grid-template-columns:64px minmax(200px,260px) 1fr;gap:24px;
   padding:36px 0;border-bottom:1px solid var(--line);align-items:start;
+  cursor:pointer;
 }
+.info-row:hover .idx{color:var(--ink);}
+.info-row.is-dark:hover .idx{color:var(--ember-2);}
 .info-row .idx{
   font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ember);letter-spacing:.06em;
-  padding-top:4px;cursor:pointer;user-select:none;transition:color .2s ease;
+  padding-top:4px;user-select:none;transition:color .2s ease;
 }
-.info-row .idx:hover{color:var(--ink);}
 .info-row .idx:focus-visible{outline:2px solid var(--ember);outline-offset:4px;border-radius:3px;}
-.info-row.is-dark .idx:hover{color:var(--ember-2);}
 .info-row .title-col{display:flex;align-items:baseline;gap:10px;}
 .info-row .title-col h3{font-size:20px;font-weight:800;margin:0;letter-spacing:-.01em;color:var(--ink);}
 /* glyphs: decorative accent for a single principle — kept small and inline so it
