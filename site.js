@@ -55,6 +55,19 @@
     window.addEventListener('resize', updateProgress);
   }
 
+  /* principles: click a number to pin the dark highlight on that row */
+  var principleRows = document.querySelectorAll('#principles .info-row');
+  if(principleRows.length){
+    principleRows.forEach(function(row){
+      var idx = row.querySelector('.idx');
+      if(!idx) return;
+      idx.addEventListener('click', function(){
+        principleRows.forEach(function(r){ r.classList.remove('is-dark'); });
+        row.classList.add('is-dark');
+      });
+    });
+  }
+
   /* cursor-spotlight glow on buttons */
   document.querySelectorAll('.btn').forEach(function(btn){
     btn.addEventListener('mousemove', function(e){

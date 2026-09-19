@@ -396,26 +396,35 @@ html[data-theme="dark"] .theme-toggle .knob{transform:translateX(22px);backgroun
 }
 .info-row .idx{
   font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ember);letter-spacing:.06em;
-  padding-top:4px;
+  padding-top:4px;cursor:pointer;user-select:none;transition:color .2s ease;
 }
+.info-row .idx:hover{color:var(--ink);}
+.info-row.is-dark .idx:hover{color:var(--ember-2);}
+.info-row .title-col{display:flex;align-items:baseline;gap:10px;}
 .info-row .title-col h3{font-size:20px;font-weight:800;margin:0;letter-spacing:-.01em;color:var(--ink);}
-.info-row .glyphs{font-size:22px;letter-spacing:.25em;color:var(--ember);margin-bottom:10px;}
+/* glyphs: decorative accent for a single principle — kept small and inline so it
+   never adds height to the title row (every row's title must sit on the same line). */
+.info-row .glyphs{font-size:13px;letter-spacing:.16em;color:var(--ember);flex-shrink:0;}
 .info-row p{margin:0;max-width:56ch;color:var(--ink-2);}
 .info-row.has-image{grid-template-columns:64px minmax(200px,260px) 1fr 140px;}
 .info-row .row-thumb{aspect-ratio:3/4;align-self:start;}
 .info-row.is-dark{background:var(--night);border-radius:20px;border-bottom:none;padding:32px 28px;color:#fff;}
 .info-row.is-dark{grid-template-columns:64px minmax(200px,260px) 1fr;}
+.info-row.has-image.is-dark{grid-template-columns:64px minmax(200px,260px) 1fr 140px;}
 .info-row.is-dark .title-col h3{color:#fff;}
 .info-row.is-dark p{color:rgba(255,255,255,.78);}
 .info-row.is-dark .idx{color:var(--ember-2);}
+/* is-quote (04 — two related points instead of one): same body type as every
+   other row, just split into two lines with a small marker for scannability. */
 .info-row.is-quote p{
-  grid-column:3;
-  font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.02em;
-  line-height:1.9;position:relative;padding-left:22px;margin-bottom:12px;
+  grid-column:3;position:relative;padding-left:16px;margin-bottom:10px;
 }
 .info-row.is-quote p:last-child{margin-bottom:0;}
-.info-row.is-quote p::before{content:"○";position:absolute;left:0;color:var(--ember);}
-.info-row.is-quote .title-col{visibility:hidden;}
+.info-row.is-quote p::before{
+  content:"";position:absolute;left:0;top:.6em;width:5px;height:5px;
+  border-radius:50%;background:var(--ember);
+}
+.info-row.is-dark.is-quote p::before{background:var(--ember-2);}
 
 /* ---------- 07 contact ---------- */
 .contact-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:start;}
