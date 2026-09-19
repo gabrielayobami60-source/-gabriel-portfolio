@@ -409,6 +409,7 @@ html[data-theme="dark"] .theme-toggle .knob{transform:translateX(22px);backgroun
 .info-row.is-dark p{color:rgba(255,255,255,.78);}
 .info-row.is-dark .idx{color:var(--ember-2);}
 .info-row.is-quote p{
+  grid-column:3;
   font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.02em;
   line-height:1.9;position:relative;padding-left:22px;margin-bottom:12px;
 }
@@ -460,6 +461,7 @@ body.rv-armed .rv.rv-in{opacity:1;transform:none;}
   .info-row.has-image{grid-template-columns:44px 1fr;}
   .info-row .title-col{grid-column:2/3;}
   .info-row p{grid-column:1/3;max-width:none;}
+  .info-row.is-quote p{grid-column:1/3;}
   .info-row .row-thumb{display:none;}
 }
 @media (max-width:640px){
