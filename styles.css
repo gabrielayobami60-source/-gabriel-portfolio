@@ -176,19 +176,20 @@ nav.primary a{
 }
 nav.primary a:hover{color:var(--ember);}
 
-/* theme toggle */
+/* theme toggle — a plain tap button (sun/moon icon), not a sliding switch */
 .theme-toggle{
-  display:inline-flex;align-items:center;gap:6px;
-  width:52px;height:30px;padding:3px;border-radius:999px;
+  display:inline-flex;align-items:center;justify-content:center;
+  width:36px;height:36px;padding:0;border-radius:50%;
   background:var(--chip-bg-light);border:1px solid var(--chip-line-light);
-  cursor:pointer;flex-shrink:0;position:relative;
+  cursor:pointer;flex-shrink:0;transition:background .2s ease,border-color .2s ease;
 }
+.theme-toggle:hover{background:var(--chip-bg);}
+.theme-toggle:active .knob{transform:scale(.82);}
 .theme-toggle .knob{
-  width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;
-  display:flex;align-items:center;justify-content:center;font-size:11px;
-  transform:translateX(0);transition:transform .25s ease,background .25s ease;
+  display:flex;align-items:center;justify-content:center;font-size:14px;
+  color:var(--ink);transition:transform .15s ease,color .2s ease;
 }
-html[data-theme="dark"] .theme-toggle .knob{transform:translateX(22px);background:var(--ember);}
+html[data-theme="dark"] .theme-toggle .knob{color:var(--ember);}
 @media (prefers-reduced-motion:reduce){
   .theme-toggle .knob{transition:none;}
 }
@@ -436,6 +437,16 @@ html[data-theme="dark"] .theme-toggle .knob{transform:translateX(22px);backgroun
 }
 .info-row.is-dark.is-quote p::before{background:var(--ember-2);}
 
+/* in dark mode the page background is already var(--night), so a black
+   highlight disappears — use ember orange instead so it still reads as active */
+html[data-theme="dark"] .info-row.is-dark{background:var(--ember);color:var(--night);}
+html[data-theme="dark"] .info-row.is-dark .title-col h3{color:var(--night);}
+html[data-theme="dark"] .info-row.is-dark p{color:rgba(10,10,12,.72);}
+html[data-theme="dark"] .info-row.is-dark .idx{color:var(--night);}
+html[data-theme="dark"] .info-row.is-dark:hover .idx{color:var(--night-2);}
+html[data-theme="dark"] .info-row.is-dark .idx:focus-visible{outline-color:var(--night);}
+html[data-theme="dark"] .info-row.is-dark.is-quote p::before{background:var(--night);}
+
 /* ---------- 07 contact ---------- */
 .contact-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:start;}
 .contact .eyebrow{color:rgba(255,255,255,.5);}
@@ -492,9 +503,8 @@ body.rv-armed .rv.rv-in{opacity:1;transform:none;}
   .meta-strip{grid-template-columns:1fr;}
   footer.site{flex-direction:column;}
   header .frame > div:last-child{gap:8px;}
-  .theme-toggle{width:40px;height:24px;}
-  .theme-toggle .knob{width:18px;height:18px;font-size:9px;}
-  html[data-theme="dark"] .theme-toggle .knob{transform:translateX(16px);}
+  .theme-toggle{width:32px;height:32px;}
+  .theme-toggle .knob{font-size:12px;}
   header .btn-dark{padding:10px 14px;font-size:12.5px;gap:6px;}
 }
 @media (max-width:420px){

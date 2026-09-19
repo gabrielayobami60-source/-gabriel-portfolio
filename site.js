@@ -55,9 +55,10 @@
     window.addEventListener('resize', updateProgress);
   }
 
-  /* info-row lists (principles, services): tap any row to highlight it, or use the
-     ↑/↓ buttons — those work with touch, unlike arrow keys, which only reach desktop
-     keyboard users and are kept here as a bonus, not the primary way to move it. */
+  /* info-row lists (principles, services): tap any row to highlight it, use the
+     ↑/↓ buttons, or — whenever the list is on screen — the ↑/↓ arrow keys, with
+     no need to click into anything first. */
+  var highlightLists = [];
   function wireHighlightList(sectionId){
     var section = document.getElementById(sectionId);
     if(!section) return;
@@ -78,6 +79,10 @@
       if(idxs[i]) idxs[i].setAttribute('aria-pressed', 'true');
       return i;
     }
+    function step(dir){
+      var next = activate(currentIndex() + dir);
+      if(idxs[next]) idxs[next].focus({preventScroll: true});
+    }
 
     rows.forEach(function(row, i){
       row.addEventListener('click', function(){ activate(i); });
@@ -90,12 +95,7 @@
         if(e.key === 'Enter' || e.key === ' '){
           e.preventDefault();
           activate(i);
-          return;
         }
-        if(e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
-        e.preventDefault();
-        var next = activate(e.key === 'ArrowDown' ? i + 1 : i - 1);
-        if(idxs[next]) idxs[next].focus();
       });
     });
 
@@ -103,14 +103,32 @@
     if(nav){
       nav.querySelectorAll('.list-nav-btn').forEach(function(btn){
         btn.addEventListener('click', function(){
-          var dir = btn.getAttribute('data-dir') === 'down' ? 1 : -1;
-          activate(currentIndex() + dir);
+          step(btn.getAttribute('data-dir') === 'down' ? 1 : -1);
         });
       });
     }
+
+    highlightLists.push({section: section, step: step});
   }
   wireHighlightList('principles');
   wireHighlightList('services');
+
+  if(highlightLists.length){
+    document.addEventListener('keydown', function(e){
+      if(e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
+      var tag = document.activeElement && document.activeElement.tagName;
+      if(tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+
+      var vh = window.innerHeight;
+      var onScreen = highlightLists.filter(function(l){
+        var r = l.section.getBoundingClientRect();
+        return r.top < vh * 0.75 && r.bottom > vh * 0.25;
+      });
+      if(!onScreen.length) return;
+      e.preventDefault();
+      onScreen[0].step(e.key === 'ArrowDown' ? 1 : -1);
+    });
+  }
 
   /* cursor-spotlight glow on buttons */
   document.querySelectorAll('.btn').forEach(function(btn){
