@@ -399,6 +399,7 @@ html[data-theme="dark"] .theme-toggle .knob{transform:translateX(22px);backgroun
   padding-top:4px;cursor:pointer;user-select:none;transition:color .2s ease;
 }
 .info-row .idx:hover{color:var(--ink);}
+.info-row .idx:focus-visible{outline:2px solid var(--ember);outline-offset:4px;border-radius:3px;}
 .info-row.is-dark .idx:hover{color:var(--ember-2);}
 .info-row .title-col{display:flex;align-items:baseline;gap:10px;}
 .info-row .title-col h3{font-size:20px;font-weight:800;margin:0;letter-spacing:-.01em;color:var(--ink);}

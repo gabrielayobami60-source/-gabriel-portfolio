@@ -55,15 +55,40 @@
     window.addEventListener('resize', updateProgress);
   }
 
-  /* principles: click a number to pin the dark highlight on that row */
+  /* principles: click a number — or focus one and use ↑/↓ — to move the dark highlight */
   var principleRows = document.querySelectorAll('#principles .info-row');
   if(principleRows.length){
+    var principleIdxs = [];
     principleRows.forEach(function(row){
       var idx = row.querySelector('.idx');
       if(!idx) return;
-      idx.addEventListener('click', function(){
+      idx.setAttribute('tabindex', '0');
+      idx.setAttribute('role', 'button');
+      idx.setAttribute('aria-pressed', row.classList.contains('is-dark') ? 'true' : 'false');
+      principleIdxs.push(idx);
+
+      function activate(){
         principleRows.forEach(function(r){ r.classList.remove('is-dark'); });
+        principleIdxs.forEach(function(i){ i.setAttribute('aria-pressed', 'false'); });
         row.classList.add('is-dark');
+        idx.setAttribute('aria-pressed', 'true');
+      }
+      idx.addEventListener('click', activate);
+      idx.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          activate();
+          return;
+        }
+        if(e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
+        e.preventDefault();
+        var i = principleIdxs.indexOf(idx);
+        var next = e.key === 'ArrowDown' ? i + 1 : i - 1;
+        if(next < 0) next = principleIdxs.length - 1;
+        if(next >= principleIdxs.length) next = 0;
+        var nextIdx = principleIdxs[next];
+        nextIdx.focus();
+        nextIdx.click();
       });
     });
   }
