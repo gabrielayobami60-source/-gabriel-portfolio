@@ -361,6 +361,7 @@ html[data-theme="dark"] .theme-toggle .knob{color:var(--ember);}
 .portfolio-grid .card:nth-child(3){grid-column:3/9;margin-top:36px;}
 .portfolio-grid .card:nth-child(4){grid-column:9/13;margin-top:130px;}
 .portfolio-grid .card:nth-child(5){grid-column:1/7;margin-top:70px;}
+.portfolio-grid .card:nth-child(6){grid-column:7/13;margin-top:20px;}
 .card{display:block;transition:transform .25s ease;transform-style:preserve-3d;will-change:transform;}
 .card .ph{aspect-ratio:4/5;margin-bottom:16px;}
 .card:hover .ph{transform:scale(1.02);transition:transform .5s ease;}
@@ -494,6 +495,7 @@ body.rv-armed .rv.rv-in{opacity:1;transform:none;}
   .portfolio-grid .card:nth-child(3){grid-column:1/13;margin-top:0;}
   .portfolio-grid .card:nth-child(4){grid-column:1/13;margin-top:0;}
   .portfolio-grid .card:nth-child(5){grid-column:1/13;margin-top:0;}
+  .portfolio-grid .card:nth-child(6){grid-column:1/13;margin-top:0;}
   .facts-grid{grid-template-columns:1fr;}
   .about-images{grid-template-columns:1fr;}
   .info-row{grid-template-columns:44px 1fr;row-gap:12px;}
