@@ -215,6 +215,10 @@ html[data-theme="dark"] .theme-toggle .knob{color:var(--ember);}
 .hero-buttons{display:flex;gap:14px;flex-wrap:wrap;}
 .hero-portrait{
   width:min(220px,32vw);aspect-ratio:3/4;flex-shrink:0;border-radius:20px;
+  box-shadow:0 0 90px 14px rgba(255,90,31,.22);
+  overflow:visible;
+  -webkit-mask-image:radial-gradient(72% 82% at 50% 38%, #000 50%, transparent 100%);
+  mask-image:radial-gradient(72% 82% at 50% 38%, #000 50%, transparent 100%);
 }
 
 /* ---------- placeholders ---------- */
