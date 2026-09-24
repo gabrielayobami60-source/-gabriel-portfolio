@@ -456,6 +456,15 @@ html[data-theme="dark"] .info-row.is-dark.is-quote p::before{background:var(--ni
   display:inline-block;word-break:break-word;
 }
 .contact-buttons{display:flex;flex-direction:column;gap:14px;align-items:flex-start;}
+.social-row{display:flex;gap:12px;margin-top:28px;}
+.social-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:42px;height:42px;border-radius:50%;
+  background:var(--chip-bg);border:1px solid var(--chip-line);
+  color:rgba(255,255,255,.75);transition:background .2s ease,color .2s ease,border-color .2s ease;
+}
+.social-btn svg{width:18px;height:18px;}
+.social-btn:hover{background:var(--ember);border-color:var(--ember);color:var(--night);}
 footer.site{
   margin-top:80px;padding-top:24px;border-top:1px solid var(--line-dark);
   display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
