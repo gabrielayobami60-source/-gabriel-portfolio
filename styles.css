@@ -561,3 +561,23 @@ body.rv-armed .rv.rv-in{opacity:1;transform:none;}
 @media (prefers-reduced-motion: reduce){
   *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
 }
+
+/* ---------- image lightbox ---------- */
+img.is-viewable{cursor:zoom-in;}
+.lightbox-overlay{
+  position:fixed;inset:0;z-index:500;display:flex;align-items:center;justify-content:center;
+  background:rgba(6,6,7,.92);padding:min(48px,6vw);
+  opacity:0;visibility:hidden;transition:opacity .2s ease;
+}
+.lightbox-overlay.is-open{opacity:1;visibility:visible;}
+.lightbox-img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px;display:block;}
+.lightbox-close{
+  position:absolute;top:20px;right:20px;width:44px;height:44px;border-radius:50%;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;
+  font-size:26px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:background .2s ease;
+}
+.lightbox-close:hover{background:rgba(255,255,255,.2);}
+@media (prefers-reduced-motion:reduce){
+  .lightbox-overlay{transition:none;}
+}
