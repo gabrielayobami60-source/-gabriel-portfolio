@@ -247,4 +247,31 @@
       if(e.key === 'Escape' && overlay.classList.contains('is-open')) closeLightbox();
     });
   }
+
+  /* testimonial pager: click the arrows to page through sets of cards */
+  var pager = document.querySelector('.testimonial-pager');
+  if(pager){
+    var pages = Array.prototype.slice.call(pager.querySelectorAll('.testimonial-grid'));
+    var pagerDots = Array.prototype.slice.call(pager.querySelectorAll('.pager-dot'));
+    var pagerPrev = pager.querySelector('.pager-arrow.prev');
+    var pagerNext = pager.querySelector('.pager-arrow.next');
+    var page = 0;
+
+    function updatePager(){
+      pages.forEach(function(p, i){ p.hidden = i !== page; });
+      pagerDots.forEach(function(d, i){ d.classList.toggle('is-active', i === page); });
+      if(pagerPrev) pagerPrev.disabled = page === 0;
+      if(pagerNext) pagerNext.disabled = page === pages.length - 1;
+    }
+    if(pagerPrev) pagerPrev.addEventListener('click', function(){
+      if(page > 0){ page--; updatePager(); }
+    });
+    if(pagerNext) pagerNext.addEventListener('click', function(){
+      if(page < pages.length - 1){ page++; updatePager(); }
+    });
+    pagerDots.forEach(function(d, i){
+      d.addEventListener('click', function(){ page = i; updatePager(); });
+    });
+    updatePager();
+  }
 })();

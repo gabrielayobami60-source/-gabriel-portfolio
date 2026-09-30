@@ -381,6 +381,7 @@ html[data-theme="dark"] .theme-toggle .knob{color:var(--ember);}
 
 /* ---------- testimonials ---------- */
 .testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.testimonial-grid[hidden]{display:none;}
 .testimonial-card{
   border:1px solid var(--line);border-radius:20px;padding:28px;
   display:flex;flex-direction:column;gap:20px;background:var(--bg-soft);
@@ -400,6 +401,24 @@ html[data-theme="dark"] .theme-toggle .knob{color:var(--ember);}
 }
 .testimonial-card .person .who a{color:var(--ink);font-weight:600;text-decoration:underline;text-underline-offset:2px;}
 .testimonial-card .person .who a:hover{color:var(--ember);}
+
+.pager-controls{display:flex;justify-content:flex-end;align-items:center;gap:14px;margin-top:24px;}
+.pager-dots{display:flex;gap:8px;margin-right:4px;}
+.pager-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--line);
+  border:none;padding:0;cursor:pointer;transition:background .2s ease,transform .2s ease;
+}
+.pager-dot.is-active{background:var(--ember);transform:scale(1.4);}
+.pager-arrow{
+  width:40px;height:40px;border-radius:50%;padding:0;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--bg-soft);border:1px solid var(--line);color:var(--ink);
+  cursor:pointer;transition:background .2s ease,border-color .2s ease,opacity .2s ease;
+}
+.pager-arrow svg{width:18px;height:18px;}
+.pager-arrow:hover{background:var(--chip-bg-light);border-color:var(--ink);}
+.pager-arrow:disabled{opacity:.35;cursor:default;}
+.pager-arrow:disabled:hover{background:var(--bg-soft);border-color:var(--line);}
 
 @media (max-width:640px){
   .evolution-track{flex-direction:column;align-items:stretch;}
