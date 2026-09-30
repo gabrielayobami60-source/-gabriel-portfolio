@@ -386,7 +386,8 @@ html[data-theme="dark"] .theme-toggle .knob{color:var(--ember);}
   display:flex;flex-direction:column;gap:20px;background:var(--bg-soft);
 }
 .testimonial-card .quote-mark{
-  font-size:40px;color:var(--ember);font-family:Georgia,serif;line-height:1;
+  font-size:17px;color:var(--ember);font-family:Georgia,serif;line-height:1;
+  letter-spacing:.08em;
 }
 .testimonial-card .quote-text{
   font-size:15px;color:var(--ink-2);font-style:italic;flex:1;margin:0;
