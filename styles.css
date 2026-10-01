@@ -218,12 +218,16 @@ html[data-theme="dark"] .theme-toggle .knob{color:var(--ember);}
   background:radial-gradient(circle,rgba(255,90,31,.28) 0%,rgba(255,90,31,0) 70%);
   pointer-events:none;
 }
-.hero .frame{position:relative;z-index:2;padding-block:44px 72px;}
+.hero .frame{position:relative;z-index:2;padding-block:36px 56px;}
 .hero-chips{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:36px;}
 .hero h1{
   font-size:clamp(40px,7.4vw,92px);font-weight:800;letter-spacing:-.025em;
-  line-height:1.04;margin:0 0 40px;max-width:16ch;
+  line-height:1.04;margin:0 0 22px;max-width:16ch;
 }
+.hero h1 .h1-role{display:block;font-size:.5em;font-weight:700;color:var(--ember);letter-spacing:-.01em;margin-top:10px;}
+.hero-sub{font-size:clamp(18px,2.1vw,24px);line-height:1.4;max-width:34ch;margin:0 0 12px;opacity:.92;}
+.hero-proof{font-family:var(--mono, ui-monospace, monospace);font-size:13px;letter-spacing:.04em;text-transform:uppercase;opacity:.7;margin:0 0 4px;}
+.hero-proof .sep{margin:0 8px;color:var(--ember);}
 .hero-row{
   display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;
 }
